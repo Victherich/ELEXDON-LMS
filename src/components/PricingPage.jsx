@@ -4,65 +4,136 @@ import { Fade } from "react-awesome-reveal";
 import { useNavigate } from "react-router-dom";
 
 const PricingPage = () => {
-    const navigate = useNavigate()
+  const navigate = useNavigate();
+
+  const pricingPlans = [
+    {
+      badge: "Best For Universities",
+      name: "University Plan",
+      price: "NGN 400,000",
+      route: "/universityregistration",
+      description:
+        "Complete university management system with advanced academic, admissions, and examination modules.",
+      features: [
+        "Unlimited Students Management",
+        "Lecturer & Admin Dashboards",
+        "Admissions System",
+        "CBT Examinations Platform",
+        "Assignments & Quizzes Automation",
+        "Auto Result Processing + PDF + QR Verification",
+        "Video Lessons Hosting",
+        "Attendance & Clock-in System",
+        "Email & Forum System",
+        "Security & Role-Based Access Control",
+        "Free Updates for 1 Year",
+        "Priority Support",
+      ],
+    },
+
+    {
+      badge: "Best For Secondary Schools",
+      name: "Secondary School Plan",
+      price: "NGN 250,000",
+      route: "/comingsoon",
+      description:
+        "Smart school management solution designed for secondary schools with digital learning and CBT support.",
+      features: [
+        "Student & Teacher Management",
+        "Online Classes & Video Lessons",
+        "CBT Test & Examination System",
+        "Assignments & Homework Management",
+        "Attendance Monitoring",
+        "Result & Report Card Generation",
+        "Parent Communication Portal",
+        "School Fees Tracking",
+        "Role-Based Access Control",
+        "Free Updates for 1 Year",
+        "Priority Support",
+      ],
+    },
+
+    {
+      badge: "Best For Primary Schools",
+      name: "Primary School Plan",
+      price: "NGN 150,000",
+      route: "/comingsoon",
+      description:
+        "Simple and easy-to-use LMS platform for primary schools focused on learning, attendance, and communication.",
+      features: [
+        "Pupil Management System",
+        "Teacher Dashboard",
+        "Digital Classroom",
+        "Assignments & Activities",
+        "Attendance Tracking",
+        "Parent Communication System",
+        "Basic Result Processing",
+        "Learning Materials Upload",
+        "Secure Access Control",
+        "Free Updates for 1 Year",
+        "Support Included",
+      ],
+    },
+  ];
+
   return (
     <Section id="pricing">
       <Container>
-
         <Fade direction="up" triggerOnce>
           <Header>
             <h2>
               Simple Pricing For{" "}
               <span>ELEXDON DIGITAL LMS</span>
             </h2>
+
             <p>
-              One powerful plan. No confusion. Designed for full university deployment.
+              Flexible pricing plans designed for universities,
+              secondary schools, and primary schools.
             </p>
           </Header>
         </Fade>
 
-        <Fade direction="up" triggerOnce>
-          <Card>
-            <Badge>Most Recommended</Badge>
+        <CardsWrapper>
+          {pricingPlans.map((plan, index) => (
+            <Fade direction="up" triggerOnce key={index}>
+              <Card>
+                <Badge>{plan.badge}</Badge>
 
-            <PlanName>Annual Subscription</PlanName>
+                <PlanName>{plan.name}</PlanName>
 
-            <Price>
-              NGN 400,000
-              <span>/year</span>
-            </Price>
+                <Price>
+                  {plan.price}
+                  <span>/year</span>
+                </Price>
 
-            <Description>
-              Full access to the entire ELEXDON DIGITAL LMS platform for your institution. Includes all modules for students, lecturers, and administrators.
-            </Description>
+                <Description>
+                  {plan.description}
+                </Description>
 
-            <Features>
-              <li>Unlimited Students Management</li>
-              <li>Lecturer & Admin Dashboards</li>
-              <li>Admissions System</li>
-              <li>CBT Examinations Platform</li>
-              <li>Assignments & Quizzes Automation</li>
-              <li>Auto Result Processing + PDF + QR Verification</li>
-              <li>Video Lessons Hosting</li>
-              <li>Attendance & Clock-in System</li>
-              <li>Email & Forum System</li>
-              <li>Security & Role-Based Access Control</li>
-              <li>Free Updates for 1 Year</li>
-              <li>Priority Support</li>
-            </Features>
+                <Features>
+                  {plan.features.map((feature, i) => (
+                    <li key={i}>{feature}</li>
+                  ))}
+                </Features>
 
-            <ButtonGroup>
-              <PrimaryButton onClick={()=>navigate('/subscription')}>Start Subscription</PrimaryButton>
-              <SecondaryButton>Request Demo</SecondaryButton>
-            </ButtonGroup>
+                <ButtonGroup>
+                  <PrimaryButton
+                    onClick={() => navigate(plan.route)}
+                  >
+                    Start Subscription
+                  </PrimaryButton>
 
-            <Note>
-              No hidden fees • Cancel anytime after annual cycle • Full institution license
-            </Note>
+                  <SecondaryButton onClick={()=>navigate('/contact')}>
+                    Request Demo
+                  </SecondaryButton>
+                </ButtonGroup>
 
-          </Card>
-        </Fade>
-
+                <Note>
+                  No hidden fees • Annual billing • Full school license
+                </Note>
+              </Card>
+            </Fade>
+          ))}
+        </CardsWrapper>
       </Container>
     </Section>
   );
@@ -74,7 +145,7 @@ export default PricingPage;
 
 const Section = styled.section`
   width: 100%;
-  padding: 100px 10px;
+  padding: 100px 20px;
 
   background: linear-gradient(
     135deg,
@@ -90,7 +161,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
 
-  gap: 10px;
+  gap: 40px;
 `;
 
 const Header = styled.div`
@@ -99,7 +170,6 @@ const Header = styled.div`
   h2 {
     font-size: 32px;
     font-weight: 800;
-
     color: #111;
   }
 
@@ -117,16 +187,20 @@ const Header = styled.div`
   p {
     font-size: 1.1rem;
     color: #666;
+    margin-top: 10px;
   }
 `;
 
+const CardsWrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 25px;
+`;
+
 const Card = styled.div`
-  max-width: 700px;
-  margin: auto;
+  padding: 25px;
 
-  padding: 10px;
-
-  border-radius: 16px;
+  border-radius: 20px;
 
   background: white;
 
@@ -137,13 +211,19 @@ const Card = styled.div`
   display: flex;
   flex-direction: column;
 
-  gap: 10px;
+  gap: 18px;
+
+  transition: 0.3s;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
 `;
 
 const Badge = styled.div`
   align-self: flex-start;
 
-  padding: 6px 10px;
+  padding: 6px 12px;
 
   border-radius: 100px;
 
@@ -156,14 +236,14 @@ const Badge = styled.div`
 `;
 
 const PlanName = styled.h3`
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 800;
 
   color: #222;
 `;
 
 const Price = styled.div`
-  font-size: 40px;
+  font-size: 38px;
   font-weight: 900;
 
   background: linear-gradient(
@@ -184,10 +264,10 @@ const Price = styled.div`
 `;
 
 const Description = styled.p`
-  font-size: 1.1rem;
+  font-size: 15px;
   color: #555;
 
-  line-height: 1.6;
+  line-height: 1.7;
 `;
 
 const Features = styled.ul`
@@ -196,7 +276,7 @@ const Features = styled.ul`
   display: flex;
   flex-direction: column;
 
-  gap: 6px;
+  gap: 8px;
 
   padding: 0;
 
@@ -204,7 +284,7 @@ const Features = styled.ul`
     font-size: 13px;
     color: #444;
 
-    padding: 6px 10px;
+    padding: 8px 12px;
 
     border-radius: 10px;
 
@@ -226,7 +306,7 @@ const PrimaryButton = styled.button`
   border: none;
   outline: none;
 
-  padding: 10px;
+  padding: 12px 18px;
 
   border-radius: 10px;
 
@@ -253,7 +333,7 @@ const PrimaryButton = styled.button`
 const SecondaryButton = styled.button`
   border: 1px solid rgba(90, 120, 255, 0.2);
 
-  padding: 10px;
+  padding: 12px 18px;
 
   border-radius: 10px;
 

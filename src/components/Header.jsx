@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Fade } from "react-awesome-reveal";
 import { Menu, X } from "lucide-react";
@@ -8,6 +8,17 @@ import logo from '../Images/logo.png'
 const Header = () => {
   const [mobileMenu, setMobileMenu] = useState(false);
   const navigate = useNavigate();
+  const [loginDropdown, setLoginDropdown] = useState(false);
+
+
+
+
+useEffect(() => {
+  const handleClickOutside = () => setLoginDropdown(false);
+  window.addEventListener("click", handleClickOutside);
+
+  return () => window.removeEventListener("click", handleClickOutside);
+}, []);
 
   return (
     <Navbar>
@@ -24,18 +35,48 @@ const Header = () => {
             <NavLinks>
               <a onClick={()=>navigate('/')}>Home</a>
               <a href="#about">About</a>
-              <a href="#features">Features</a>
+              <a onClick={()=>navigate('/universityportalsintro')}>University Portal</a>
               
-              <a href="#pricing">Pricing</a>
+              <a onClick={()=>navigate('/secondaryschportalsintro')}>Secondary Sch Portal</a>
+              <a onClick={()=>navigate('/primaryschportalsintro')}>Primary Sch Portal</a>
               
-              <a href="#contact">Contact</a>
+              <a onClick={()=>navigate('/contact')}>Contact Us</a>
             </NavLinks>
           </Fade>
         </DesktopNav>
 
         <Fade direction="down" triggerOnce>
           <ButtonGroup>
-            <LoginButton>Login</LoginButton>
+           {/* <div style={{ position: "relative" }} onClick={(e) => e.stopPropagation()}>
+  <LoginButton onClick={() => setLoginDropdown(!loginDropdown)}>
+    Login ▾
+  </LoginButton>
+
+  {loginDropdown && (
+    <LoginDropdown>
+      <div onClick={() => {
+  setLoginDropdown(false);
+  navigate("/admindashboard");
+}}>
+        School Admin
+      </div>
+
+      <div onClick={() => {
+  setLoginDropdown(false);
+  navigate("/studentdashboard");
+}}>
+        Student
+      </div>
+
+      <div onClick={() => {
+  setLoginDropdown(false);
+  navigate("/lecturerdashboard");
+}}>
+        Lecturer
+      </div>
+    </LoginDropdown>
+  )}
+</div> */}
 
             <PrimaryButton  onClick={()=>navigate('/pricing')}>
               Subscribe Now
@@ -162,7 +203,7 @@ const NavLinks = styled.div`
 
     color: #555;
 
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
 
     padding: 6px 10px;
@@ -203,7 +244,7 @@ const LoginButton = styled.button`
   cursor: pointer;
 
   transition: 0.3s;
-
+outline:none;
   &:hover {
     color: #7b61ff;
   }
@@ -313,4 +354,39 @@ const MobileButtons = styled.div`
   flex-direction: column;
 
   gap: 10px;
+`;
+
+const LoginDropdown = styled.div`
+  position: absolute;
+  top: 40px;
+  right: 0;
+
+  background: white;
+  border-radius: 10px;
+
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+
+  overflow: hidden;
+  min-width: 180px;
+
+  display: flex;
+  flex-direction: column;
+
+  z-index: 999;
+
+  div {
+    padding: 12px;
+    cursor: pointer;
+
+    font-size: 14px;
+    font-weight: 600;
+    color: #444;
+
+    transition: 0.2s;
+
+    &:hover {
+      background: rgba(90, 120, 255, 0.1);
+      color: #5a78ff;
+    }
+  }
 `;

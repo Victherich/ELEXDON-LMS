@@ -1,8 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { Fade } from "react-awesome-reveal";
+import {  useNavigate } from "react-router-dom";
 
 const Footer = () => {
+  const navigate =useNavigate()
   return (
     <Section>
       <Container>
@@ -39,10 +41,10 @@ const Footer = () => {
 
               <Column>
                 <h4>Support</h4>
-                <a href="#contact">Contact</a>
-                <a href="#faq">FAQ</a>
+                <a onClick={()=>navigate('/contact')}>Contact Us</a>
+                {/* <a href="#faq">FAQ</a>
                 <a href="#contact">Help Center</a>
-                <a href="#contact">Documentation</a>
+                <a href="#contact">Documentation</a> */}
               </Column>
             </Links>
 
@@ -57,7 +59,7 @@ const Footer = () => {
           <SmallLinks>
             <a href="#privacy">Privacy</a>
             <a href="#terms">Terms</a>
-            <a href="#security">Security</a>
+            {/* <a href="#security">Security</a> */}
           </SmallLinks>
         </Bottom>
 
@@ -160,8 +162,8 @@ const Column = styled.div`
   a {
     text-decoration: none;
 
-    font-size: 1.1rem;
-
+    font-size: 1rem;
+cursor:pointer;
     color: #555;
 
     transition: 0.3s;
@@ -202,7 +204,7 @@ const SmallLinks = styled.div`
 
   a {
     font-size: 12px;
-
+cursor:pointer;
     color: #666;
 
     text-decoration: none;

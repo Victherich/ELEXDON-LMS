@@ -1,8 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import { Fade } from "react-awesome-reveal";
+import { useNavigate } from "react-router-dom";
 
 const CTA = () => {
+const navigate = useNavigate();
+
+
   return (
     <Section>
       <Container>
@@ -21,8 +25,8 @@ const CTA = () => {
             </Description>
 
             <ButtonGroup>
-              <PrimaryButton>Request Demo</PrimaryButton>
-              <SecondaryButton>Contact Sales</SecondaryButton>
+              <PrimaryButton onClick={()=>navigate('/contact')}>Request Demo</PrimaryButton>
+              <SecondaryButton onClick={()=>navigate('/contact')}>Contact Sales</SecondaryButton>
             </ButtonGroup>
 
             <Note>

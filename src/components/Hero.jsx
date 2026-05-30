@@ -23,18 +23,18 @@ const HeroSection = () => {
 
           <Slide direction="up" triggerOnce>
             <Title>
-              Transform University Education With{" "}
+              Transform Education With{" "}
               <span>ELEXDON DIGITAL LMS</span>
             </Title>
           </Slide>
 
           <Fade delay={200} triggerOnce>
             <Description>
-              Manage admissions, CBT examinations,
+              Manage admissions, examinations,
               assignments, quizzes, assessments,
               grading, and automatic result
               processing from one powerful platform
-              built for modern universities.
+              built for modern schools and universities.
             </Description>
           </Fade>
 

@@ -14,7 +14,7 @@ const Features = () => {
               <span>ELEXDON DIGITAL LMS</span>
             </h2>
             <p>
-              Everything universities need in one unified academic ecosystem
+              Everything schools and universities need in one unified academic ecosystem
             </p>
           </Header>
         </Fade>
@@ -42,7 +42,7 @@ const Features = () => {
         {/* LECTURER */}
         <Fade direction="up" triggerOnce>
           <RoleCard>
-            <RoleTitle>👨‍🏫 Lecturer Dashboard</RoleTitle>
+            <RoleTitle>👨‍🏫 Lecturer / Teacher Dashboard</RoleTitle>
 
             <Grid>
               <Feature>Course Enrollment</Feature>

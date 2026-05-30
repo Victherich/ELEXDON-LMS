@@ -13,7 +13,7 @@ const AboutUsBriefComponent = () => {
               About <span>ELEXDON DIGITAL LMS</span>
             </h2>
             <p>
-              A unified academic platform built to modernize how universities manage learning, examinations, admissions, and student records.
+              A unified academic platform built to modernize how schools manage learning, examinations, admissions, and student records.
             </p>
           </Header>
         </Fade>
@@ -22,7 +22,7 @@ const AboutUsBriefComponent = () => {
 
           <Fade direction="left" triggerOnce>
             <Left>
-              <h3>Built for Modern Universities</h3>
+              <h3>Built for Modern Schools and Universities</h3>
 
               <p>
                 ELEXDON DIGITAL LMS is a complete academic management system that combines LMS, CBT examinations, admissions, grading, attendance tracking, and communication tools into one powerful platform.

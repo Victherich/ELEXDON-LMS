@@ -10,7 +10,7 @@ const Testimonials = () => {
         <Fade direction="up" triggerOnce>
           <Header>
             <h2>
-              What Universities Say About{" "}
+              What Institutions Say About{" "}
               <span>ELEXDON DIGITAL LMS</span>
             </h2>
             <p>
