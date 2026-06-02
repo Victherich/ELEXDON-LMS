@@ -347,14 +347,15 @@ import { useSelector } from "react-redux";
 import { Context } from "../../components/Context";
 
 const ManageCourses = () => {
-  const { api_domain, api_key } = useContext(Context);
+  const { api_domain, api_key, courses, fetchCourses } = useContext(Context);
   const schoolToken = useSelector((state) => state.schoolToken);
   const schoolInfo = useSelector((state) => state.schoolInfo);
 
   const [loading, setLoading] = useState(false);
   const [editId, setEditId] = useState(null);
-  const [courses, setCourses] = useState([]);
+
   const [modalOpen, setModalOpen] = useState(false);
+  const [search, setSearch] = useState("");
 
   const [form, setForm] = useState({
     code: "",
@@ -371,20 +372,20 @@ const ManageCourses = () => {
   /* =========================
      FETCH COURSES (READ)
   ========================= */
-  const fetchCourses = async () => {
-    try {
-      const res = await fetch(`${api_domain}/get_courses.php?key=${api_key}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ school_id: schoolInfo.id }),
-      });
+  // const fetchCourses = async () => {
+  //   try {
+  //     const res = await fetch(`${api_domain}/get_courses.php?key=${api_key}`, {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({ school_id: schoolInfo.id }),
+  //     });
 
-      const data = await res.json();
-      if (data.success) setCourses(data.courses);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  //     const data = await res.json();
+  //     if (data.success) setCourses(data.courses);
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
 
   useEffect(() => {
     fetchCourses();
@@ -509,21 +510,64 @@ const ManageCourses = () => {
     }
   };
 
+  const filteredCourses = courses.filter((course) => {
+  const query = search.toLowerCase().trim();
+
+  return (
+    course.code?.toLowerCase().includes(query) ||
+    course.title?.toLowerCase().includes(query)
+  );
+});
+
   return (
     <Container>
 
       {/* ================= HEADER ROW ================= */}
       <HeaderRow>
-        <PageTitle>Courses</PageTitle>
+        <PageTitle>Courses ({filteredCourses.length})</PageTitle>
         <AddButton onClick={() => setModalOpen(true)}>+ Add Course</AddButton>
       </HeaderRow>
+
+      <ImportantNote>
+  <strong>Important Notice: </strong>
+  Ensure that all courses are correctly entered or uploaded. Deleting any course in the future will affect all students and lecturers who have already used those courses.
+
+  <br /><br />
+
+  If you want to change the course name, course code, unit, status, or meeting link, use the <strong>Edit</strong> button instead of deleting. Editing will update the same course while maintaining its ID.
+
+  <br /><br />
+
+  Uploading a new course instead of editing an existing one will create a new ID. Users already assigned to the old course will lose access, and related data may no longer be linked correctly.
+</ImportantNote>
+
+    <SearchWrapper>
+  <SearchInput
+    type="text"
+    placeholder="Search by course code or course title..."
+    value={search}
+    onChange={(e) => setSearch(e.target.value)}
+  />
+
+  {search && (
+    <ClearSearchBtn onClick={() => setSearch("")}>
+      ✕
+    </ClearSearchBtn>
+  )}
+</SearchWrapper>
+
+
 
       {/* ================= COURSE LIST ================= */}
       <List>
         {courses.length === 0 && (
-          <Empty>No courses yet. Click "Add Course" to get started.</Empty>
+          <Empty>
+  {search
+    ? "No matching courses found."
+    : 'No courses yet. Click "Add Course" to get started.'}
+</Empty>
         )}
-        {courses.map((c) => (
+        {filteredCourses.map((c) => (
           <Item key={c.id}>
 <CourseInfo>
   <strong>{c.code.toUpperCase()}</strong> — {c.title.charAt(0).toUpperCase() + c.title.slice(1)}
@@ -805,4 +849,64 @@ const SubmitBtn = styled.button`
 
   &:hover { background: #6a50ee; }
   &:disabled { opacity: 0.6; cursor: not-allowed; }
+`;
+
+
+const SearchWrapper = styled.div`
+  position: relative;
+  margin-bottom: 12px;
+`;
+
+const SearchInput = styled.input`
+  width: 100%;
+  padding: 10px 40px 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 13px;
+  box-sizing: border-box;
+
+  &:focus {
+    outline: none;
+    border-color: #7b61ff;
+  }
+`;
+
+const ClearSearchBtn = styled.button`
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: 24px;
+  height: 24px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: red;
+  color: white;
+
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: bold;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background: #e5e5e5;
+    color: #222;
+  }
+`;
+
+const ImportantNote = styled.div`
+  background: #fff4e5;
+  border-left: 5px solid #ff9800;
+  padding: 12px;
+  margin-bottom: 12px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #5a3b00;
+  border-radius: 6px;
 `;

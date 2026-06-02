@@ -217,7 +217,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { adminLogin } from "../../Features/Slice";
 
-const AdminLogin = () => {
+const UniversityAdminLogin = () => {
 
   const { api_domain, api_key } = useContext(Context);
 
@@ -406,7 +406,15 @@ const AdminLogin = () => {
 
         <ForgotPassword
           onClick={() =>
-            navigate("/adminforgotpassword")
+            navigate("/universityadminsignup")
+          }
+        >
+          Already have an account? Signup
+        </ForgotPassword>
+
+        <ForgotPassword
+          onClick={() =>
+            navigate("/universityadminforgotpassword")
           }
         >
           Forgot Password?
@@ -418,7 +426,7 @@ const AdminLogin = () => {
   );
 };
 
-export default AdminLogin;
+export default UniversityAdminLogin;
 
 /* =========================
    STYLES

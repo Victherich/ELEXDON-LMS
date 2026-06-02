@@ -267,7 +267,7 @@ import { adminLogout } from "../../Features/Slice";
    MAIN COMPONENT
 ========================= */
 
-const AdminDashboard = () => {
+const UniversityAdminDashboard = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState("profile");
 
@@ -407,7 +407,7 @@ const AdminDashboard = () => {
           </Hamburger>
 
           <TopBarTitle>
-            Admin Dashboard
+            University Admin Dashboard
           </TopBarTitle>
 
         </TopBar>
@@ -422,7 +422,7 @@ const AdminDashboard = () => {
   );
 };
 
-export default AdminDashboard;
+export default UniversityAdminDashboard;
 
 /* =========================
    STYLES

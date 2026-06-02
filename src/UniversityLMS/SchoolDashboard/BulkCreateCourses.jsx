@@ -70,7 +70,7 @@ const parseCSV = (text) => {
    COMPONENT
 ═══════════════════════════════════════════ */
 const BulkCreateCourses = () => {
-  const { api_domain, api_key } = useContext(Context);
+  const { api_domain, api_key, fetchCourses } = useContext(Context);
   const schoolInfo = useSelector((state) => state.schoolInfo);
 
   const fileInputRef = useRef(null);
@@ -171,6 +171,7 @@ const BulkCreateCourses = () => {
       setResults(data.results); // { inserted, skipped, errors: [] }
       setRows([]);
       setFileName("");
+      fetchCourses();
 
     } catch (err) {
       Swal.fire("Error", err.message, "error");

@@ -8,8 +8,8 @@ import Footer from './components/Footer';
 import CTA from './components/CTA';
 import UniversityRegistrationPage from './UniversityLMS/UniversityRegistrationPage';
 import PricingPage from './components/PricingPage';
-import AdminLogin from './UniversityLMS/AdminDashboard/AdminLogin';
-import AdminDashboard from './UniversityLMS/AdminDashboard/AdminDashboard';
+import UniversityAdminLogin from './UniversityLMS/AdminDashboard/AdminLogin';
+import UniversityAdminDashboard from './UniversityLMS/AdminDashboard/AdminDashboard';
 import UniversityLogin from './UniversityLMS/SchoolDashboard/UniversityLogin';
 import PrivateUniversityDashboard from './UniversityLMS/SchoolDashboard/PrivateUniversityDashboard';
 import UniversityDashboard from './UniversityLMS/SchoolDashboard/UniversityDashboard';
@@ -21,6 +21,7 @@ import ContactUs from './components/Contactus';
 import PaystackSubscriptionPage from './UniversityLMS/SchoolDashboard/PaystackSubscriptionPage';
 import Settings from './UniversityLMS/SchoolDashboard/SettingsPage';
 import CreateCourse from './UniversityLMS/SchoolDashboard/ManageCourses';
+import PrivateUniversityAdminDashboard from './UniversityLMS/AdminDashboard/PrivateUniversityAdminDashboard';
 
 function App() {
   return (
@@ -31,14 +32,20 @@ function App() {
     <Route path='/' element={<LandingPage/>}/>
     <Route path='/universityregistration' element={<UniversityRegistrationPage/>}/>
     <Route path='/pricing' element ={<PricingPage/>}/>
-    <Route path='/adminlogin' element={<AdminLogin/>}/>
-    <Route path='/admindashboard' element={<AdminDashboard/>}/>
+    <Route path='/universityadminlogin' element={<UniversityAdminLogin/>}/>
+   
     <Route path='/universitylogin' element={<UniversityLogin/>}/>
     <Route path='/universityportalsintro' element={<UniversityPortalsHome/>}/>
     <Route path='/secondaryschportalsintro' element={<SecondarySchPortalsHome/>}/>
     <Route path='/primaryschportalsintro' element={<PrimarySchoolPortalsHome/>}/>
     <Route path='/comingsoon' element={<ComingSoon/>}/>
     <Route path='/contact' element={<ContactUs/>}/>
+
+<Route path='/universityadmindashboard' element={<PrivateUniversityAdminDashboard/>}>
+<Route index element={<UniversityAdminDashboard/>}/>
+
+</Route>
+
 
       <Route path="/universitydashboard" element={<PrivateUniversityDashboard />}>
   <Route index element={<UniversityDashboard />} />

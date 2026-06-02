@@ -6,7 +6,8 @@ import Swal from "sweetalert2";
 import PaystackPop from "@paystack/inline-js";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../../components/Context";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { schoolLogout } from "../../Features/Slice";
 // import { auth } from "@/firebaseConfig";
 // import { collection, query, where, getDocs, addDoc } from "firebase/firestore";
 // import { db, paymentDb } from "@/firebaseConfig";
@@ -117,6 +118,10 @@ const [redirectCountdown, setRedirectCountdown] = useState(10);
 const {universitySubscriptionPrice, api_domain, api_key}=useContext(Context);
   const PRICE_NGN = universitySubscriptionPrice;
   const schoolInfo = useSelector((state) => state.schoolInfo);
+  const schoolToken = useSelector((state)=>state.schoolToken);
+  const dispatch = useDispatch();
+  const [activeShow,setActiveShow]=useState(false)
+
 
 
   /* ===================== INIT PAYMENT ===================== */
@@ -391,6 +396,89 @@ const saveSubscription = async ({
 };
 
 
+
+
+
+useEffect(() => {
+  const checkSubscription = async () => {
+    try {
+      setLoading(true);
+
+      const token = schoolToken;
+
+      const res = await fetch(
+        `${api_domain}/check_subscription.php?key=${api_key}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ token }),
+        }
+      );
+
+      const data = await res.json();
+
+
+
+      if (!data.active) {
+        navigate("/universitydashboard/subscription");
+        return;
+      }
+
+      if(data.active){
+setActiveShow(true);
+      }
+
+      
+    } catch (error) {
+      console.error(error);
+      // navigate("/universitydashboard/subscription");
+    } finally {
+      // setLoading(false);
+    }
+  };
+
+  checkSubscription();
+}, []);
+
+
+
+
+  /* =========================
+     LOGOUT
+  ========================= */
+
+  const handleLogout = () => {
+    Swal.fire({
+      title: "Logout?",
+      text: "You will need to login again",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#7b61ff",
+      cancelButtonColor: "#ff4d6d",
+      confirmButtonText: "Logout",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.removeItem("school_token");
+
+        dispatch(schoolLogout());
+
+        Swal.fire({
+          icon: "success",
+          title: "Logged Out",
+          text: "Logout successful",
+          timer: 2000,
+          showConfirmButton: false,
+        });
+      }
+    });
+  };
+
+
+
+
+
   return (
     <Container>
       <Card>
@@ -440,6 +528,18 @@ const saveSubscription = async ({
   </Box>
 )}
 
+
+  {activeShow && (
+  <Box>
+    <h2 style={{color:"green"}}>🎉 Subscription Active</h2>
+    <p>You now have full access to the portals</p>
+
+    <h3>
+      Your current subscription will expire on 
+    </h3>
+  </Box>
+)}
+
         {/* ================= IDLE MESSAGE ================= */}
         {status === "idle" && (
           <Box>
@@ -452,7 +552,7 @@ const saveSubscription = async ({
 
 
         {/* ================= PAYMENT OPTIONS ================= */}
-       {status!== "success"&& <Box>
+       {/* {status!== "success"&& <Box>
           <h3>Click Proceed and then Select Your Preferred Payment Method</h3>
           <p>
            <b>NOTE:</b> If you choose bank transfer, then copy the account number that will be shown, go to your bank app and make the transfer, then ensure to come back to this page and click the <b>I HAVE COMPLETED PAYMENT</b> button.
@@ -461,14 +561,36 @@ const saveSubscription = async ({
           <Button onClick={() => startPayment("NGN")}>
             Proceed with Paystack (₦{PRICE_NGN})
           </Button>
-           <SecondaryButton onClick={() => navigate("/universityportalsintro")}>
-            Back to portals
-          </SecondaryButton>
+        
+        </Box>} */}
+
+
+
+        {/* ================= PAYMENT OPTIONS ================= */}
+       {!activeShow&& <Box>
+          <h3>Click Proceed and then Select Your Preferred Payment Method</h3>
+          <p>
+           <b>NOTE:</b> If you choose bank transfer, then copy the account number that will be shown, go to your bank app and make the transfer, then ensure to come back to this page and click the <b>I HAVE COMPLETED PAYMENT</b> button.
+          </p>
+
+          <Button onClick={() => startPayment("NGN")}>
+            Proceed with Paystack (₦{PRICE_NGN})
+          </Button>
+         
 
        
 
  
         </Box>}
+
+
+          <SecondaryButton onClick={() => navigate("/universityportalsintro")}>
+            Back to portals
+          </SecondaryButton>
+
+          <SecondaryButton onClick={handleLogout}>
+            Logout
+          </SecondaryButton>
 
         
 

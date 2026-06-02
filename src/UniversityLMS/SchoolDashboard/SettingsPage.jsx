@@ -8,6 +8,9 @@ import { schoolLogin } from "../../Features/Slice";
 import LevelSemesterBuilder from "./LevelSemesterBuilder";
 import ManageCourses from "./ManageCourses";
 import BulkCreateCourses from "./BulkCreateCourses";
+import { useNavigate } from "react-router-dom";
+import ManageDepartments from "./ManageDepartments";
+import ManagePrograms from "./ManagePrograms";
 
 const Settings = () => {
   const schoolInfo = useSelector((state) => state.schoolInfo);
@@ -15,7 +18,8 @@ const dispatch = useDispatch();
   const [editMode, setEditMode] = useState(false);
   const {api_domain, api_key}=useContext(Context);
   const schoolToken = useSelector((state)=>state.schoolToken);
-const [loading, setLoading]=useState(false)
+const [loading, setLoading]=useState(false);
+const navigate = useNavigate();
   const [form, setForm] = useState({
     name: schoolInfo?.name || "",
     email: schoolInfo?.email || "",
@@ -77,10 +81,27 @@ const handleSave = async () => {
     setLoading(false);
   }
 };
+
+
+
+
+
   return (
     <Container>
       <Card>
-
+<p
+  style={{
+    textAlign: "right",
+    cursor: "pointer",
+    color: "#7b61ff",
+    fontWeight: "600",
+    fontSize: "14px",
+    textDecoration: "underline",
+  }}
+  onClick={() => navigate("/universitydashboard")}
+>
+  Back to Dashboard
+</p>
         <Title>Account Settings</Title>
         <Subtitle>Manage your school profile information</Subtitle>
 
@@ -142,12 +163,31 @@ const handleSave = async () => {
 
         </ButtonGroup>
 
-        <Divider />
-
+        {/* <Divider /> */}
+<hr style={{margin:"10px", height:"10px" , backgroundColor:"blue"}}/>
         <LevelSemesterBuilder/>
-
+     
+<hr style={{margin:"10px", height:"10px" , backgroundColor:"blue"}}/>
        <ManageCourses/>
        <BulkCreateCourses/>
+       <hr style={{margin:"10px", height:"10px" , backgroundColor:"blue"}}/>
+       <ManageDepartments/>
+       <hr style={{margin:"10px", height:"10px" , backgroundColor:"blue"}}/>
+       <ManagePrograms/>
+
+       <p
+  style={{
+    textAlign: "right",
+    cursor: "pointer",
+    color: "#7b61ff",
+    fontWeight: "600",
+    fontSize: "14px",
+    textDecoration: "underline",
+  }}
+  onClick={() => navigate("/universitydashboard")}
+>
+  Back to Dashboard
+</p>
 
       </Card>
     </Container>
